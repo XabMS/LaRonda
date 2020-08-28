@@ -1,293 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    tools:context=".MainActivity"
     android:background="@drawable/gradient">
 
-
-    <!-- Left side spacer -->
     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/Equipo1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:shadowColor="#03102B"
-            android:text="@string/Equipo_1"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:typeface="sans" />
-
-        <TextView
-            android:id="@+id/Contador1"
-            android:background="@drawable/rounded_corners"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:maxWidth="150dp"
-            android:maxHeight="90dp"
-            android:minWidth="150dp"
-            android:minHeight="90dp"
-            android:text=" 0 "
-            android:textColor="#d32f2f"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/Texto1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:text="Malas"/>
-
-        <Button
-            android:id="@+id/BotonRonda1"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:text="Ronda"
-            android:textAllCaps="true"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/BotonParranda1"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Parranda"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/BotonCaracol1"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Caracol"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/BotonMajo1"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Majo"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/BotonBienda1"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:text="Bien Dá"
-            android:textSize="20sp" />
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_gravity="center"
-       android:gravity="center"
-       android:layout_marginTop="5dp"
-       android:orientation="horizontal">
-
-       <Button
-           android:id="@+id/BotonResta1"
-           style="@android:style/Widget.Material.Button.Toggle"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center"
-           android:layout_marginHorizontal="5dp"
-           android:background="#4d1b71b0"
-           android:text="-1"
-           android:textAlignment="center"
-           android:textSize="20sp" />
-
-       <Button
-           android:id="@+id/BotonSuma1"
-           style="@android:style/Widget.Material.Button.Toggle"
-           android:background="#4d1b71b0"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="center"
-           android:layout_marginHorizontal="5dp"
-
-           android:textSize="20sp"
-           android:text="+1" />
-
-   </LinearLayout>
+        android:orientation="horizontal">
+        <!--android:background="@drawable/gradient"-->
 
 
-
-</LinearLayout>
-
-
-<!-- Right side spacer -->
-
-
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="Equipo 2"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/Contador2"
-            android:background="@drawable/rounded_corners"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:maxWidth="150dp"
-            android:maxHeight="90dp"
-            android:minWidth="150dp"
-            android:minHeight="90dp"
-            android:text=" 0 "
-            android:textColor="#d32f2f"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/Texto2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            android:text="Malas"/>
-
-        <Button
-            android:id="@+id/BotonRonda2"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:textSize="20sp"
-            android:text="Ronda"/>
-        <Button
-            android:id="@+id/BotonParranda2"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"
-            android:text="Parranda"/>
-        <Button
-            android:id="@+id/BotonCaracol2"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"
-            android:text="Caracol"/>
-        <Button
-            android:id="@+id/BotonMajo2"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"
-            android:text="Majo"/>
-        <Button
-            android:id="@+id/BotonBienda2"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:background="#4d1b71b0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"
-            android:text="Bien Dá"/>
-
+        <!-- Left side spacer -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/BotonResta2"
-                style="@android:style/Widget.Material.Button.Toggle"
-                android:background="#4d1b71b0"
+            <TextView
+                android:id="@+id/Equipo1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20sp"
-                android:layout_marginHorizontal="5dp"
-                android:text="-1" />
+                android:layout_weight="1"
+                android:shadowColor="#03102B"
+                android:text="@string/Equipo_1"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-            <Button
-                android:id="@+id/BotonSuma2"
-                style="@android:style/Widget.Material.Button.Toggle"
-                android:background="#4d1b71b0"
+            <TextView
+                android:id="@+id/Contador1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20sp"
-                android:layout_marginHorizontal="5dp"
-                android:text="+1" />
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners"
+
+                android:gravity="center"
+                android:maxWidth="150dp"
+                android:maxHeight="90dp"
+                android:minWidth="150dp"
+                android:minHeight="90dp"
+                android:text=" 0 "
+                android:textColor="#d32f2f"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Texto1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:text="Malas"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BotonRonda1"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="#4d1b71b0"
+                android:text="Ronda"
+                android:textAllCaps="true"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonParranda1"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Parranda"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonCaracol1"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Caracol"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonMajo1"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Majo"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonBienda1"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Bien Dá"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/BotonResta1"
+                    style="@android:style/Widget.Material.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="#4d1b71b0"
+                    android:text="-1"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/BotonSuma1"
+                    style="@android:style/Widget.Material.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="#4d1b71b0"
+
+                    android:text="+1"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
 
+        <!-- Right side spacer -->
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Equipo 2"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Contador2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners"
+                android:gravity="center"
+                android:maxWidth="150dp"
+                android:maxHeight="90dp"
+                android:minWidth="150dp"
+                android:minHeight="90dp"
+                android:text=" 0 "
+                android:textColor="#d32f2f"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Texto2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:text="Malas"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BotonRonda2"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="#4d1b71b0"
+                android:text="Ronda"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonParranda2"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Parranda"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonCaracol2"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Caracol"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonMajo2"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Majo"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/BotonBienda2"
+                style="@android:style/Widget.Material.Button.Toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="#4d1b71b0"
+                android:text="Bien Dá"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/BotonResta2"
+                    style="@android:style/Widget.Material.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="#4d1b71b0"
+                    android:text="-1"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/BotonSuma2"
+                    style="@android:style/Widget.Material.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    android:background="#4d1b71b0"
+                    android:text="+1"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>
