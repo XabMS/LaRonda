@@ -41,67 +41,66 @@ class MainActivity : AppCompatActivity() {
 
         //funcion que comprueba si vale mas de 11, cambia el texto de buenas/malas y reajusta el contador si hace falta
 
-        fun comparador1(contador: Int, texto: String): Int {
-            contador1 = contador
-            texto1 = texto
-            if (texto1 == "Malas") {
-                if (contador > 11) {
-                    texto1 = "Buenas"
-                    Texto1.text = texto1
-                    Contador1.setTextColor(Color.parseColor("#4caf50"))
-                    //Texto1.setBackgroundColor(Color.parseColor("#01ff90"))
-                    contador1 = contador1 - 11
-                    return contador1
-                } else {
-                    return contador1
-                }
+        fun comparador(contador: Int, texto: String, equipo: Int): Int {
+            if (equipo == 1){
+                contador1 = contador
+                texto1 = texto
+                if (texto1 == "Malas") {
+                    if (contador > 11) {
+                        texto1 = "Buenas"
+                        Texto1.text = texto1
+                        Contador1.setTextColor(Color.parseColor("#4caf50"))
+                        contador1 -= 11
+                        return contador1
+                    } else {
+                        return contador1
+                    }
 
-            } else {
-                if (contador > 9) {
-                    contador1 = 10
-                    Toast.makeText(this@MainActivity, "EQUIPO 1 GANA", Toast.LENGTH_SHORT).show()
                 } else {
-                    return contador1
+                    if (contador > 9) {
+                        contador1 = 10
+                        Toast.makeText(this@MainActivity, "EQUIPO 1 GANA", Toast.LENGTH_SHORT).show()
+                    } else {
+                        return contador1
+                    }
                 }
+                return contador1
             }
-        return contador1
+            else {
+                contador2 = contador
+                texto2 = texto
+                if (texto2 == "Malas") {
+                    if (contador > 11) {
+                        texto2 = "Buenas"
+                        Texto2.text = texto2
+                        Contador2.setTextColor(Color.parseColor("#4caf50"))
+                        contador2 = contador2 - 11
+                        return contador2
+                    } else {
+                        return contador2
+                    }
+
+                } else {
+                    if (contador > 9) {
+                        contador2 = 10
+                        Toast.makeText(this@MainActivity, "EQUIPO 2 GANA", Toast.LENGTH_SHORT).show()
+                    } else {
+                        return contador2
+                    }
+                }
+                return contador2
+            }
         }
 
-        fun comparador2(contador: Int, texto: String): Int {
-            contador2 = contador
-            texto2 = texto
-            if (texto2 == "Malas") {
-                if (contador > 11) {
-                    texto2 = "Buenas"
-                    Texto2.text = texto2
-                    Contador2.setTextColor(Color.parseColor("#4caf50"))
-                    contador2 = contador2 - 11
-                    return contador2
-                } else {
-                    return contador2
-                }
-
-            } else {
-                if (contador > 9) {
-                    contador2 = 10
-                    Toast.makeText(this@MainActivity, "EQUIPO 2 GANA", Toast.LENGTH_SHORT).show()
-                } else {
-                    return contador2
-                }
-            }
-            return contador2
-        }
-
-        fun suma_puntuacion(cantidad: Int, jugador: Int){
-
-            if (jugador == 1) {
+        fun suma_puntuacion(cantidad: Int, equipo: Int){
+            if (equipo == 1) {
                 contador1 += cantidad
-                comparador1(contador1, texto1)
+                comparador(contador1, texto1,1)
                 cont1Str = contador1.toString()
                 Contador1.text = cont1Str
             } else {
                 contador2 += cantidad
-                comparador2(contador2, texto2)
+                comparador(contador2, texto2,2)
                 cont2Str = contador2.toString()
                 Contador2.text = cont2Str
             }
@@ -168,7 +167,7 @@ class MainActivity : AppCompatActivity() {
             if (contador2 < 1 && texto2 == "Malas") {
                 contador2 = 0
             }
-            comparador2(contador2,texto2)
+            comparador(contador2,texto2,2)
             cont2Str = contador2.toString()
             Contador2.text = cont2Str
         }
@@ -214,8 +213,4 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.topbar, menu)
         return true
     }
-
-
-
-
 }
