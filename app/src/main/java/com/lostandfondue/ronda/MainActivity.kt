@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //Button buttonRonda
-    //var contador = 0
     var contador1 = 0
     var contador2 = 0
     var C1Str = ""
