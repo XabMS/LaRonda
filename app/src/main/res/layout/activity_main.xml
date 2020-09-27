@@ -132,27 +132,29 @@
                     style="@android:style/Widget.Material.Button.Toggle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="5dp"
                     android:background="#4d1b71b0"
                     android:text="-1"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@+id/BotonSuma1"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/BotonSuma1"
                     style="@android:style/Widget.Material.Button.Toggle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="5dp"
                     android:background="#4d1b71b0"
                     android:text="+1"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/BotonResta1" />
+                    app:layout_constraintStart_toEndOf="@+id/BotonResta1"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <!--
@@ -307,26 +309,28 @@
                     style="@android:style/Widget.Material.Button.Toggle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="5dp"
                     android:background="#4d1b71b0"
                     android:text="-1"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@+id/BotonSuma2"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/BotonSuma2"
                     style="@android:style/Widget.Material.Button.Toggle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="5dp"
                     android:background="#4d1b71b0"
                     android:text="+1"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/BotonResta2" />
+                    app:layout_constraintStart_toEndOf="@+id/BotonResta2"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
