@@ -106,74 +106,68 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fun resta_puntuacion(equipo: Int){
+            if (equipo == 1) {
+                contador1 -= 1
+                if (contador1 < 1 && texto1 == "Buenas") {        //pasamos de buenas a malas
+                    texto1 = "Malas"
+                    Texto1.text = texto1
+                    Contador1.setTextColor(Color.parseColor("#d32f2f"))
+                    contador1 = 11
+                }
+                if (contador1 < 1 && texto1 == "Malas") {
+                    contador1 = 0
+                }
+                cont1Str = contador1.toString()
+                Contador1.text = cont1Str
+            } else {
+                contador2 -= 1
+                if (contador2 < 1 && texto2 == "Buenas") {        //pasamos de buenas a malas
+                    texto2 = "Malas"
+                    Texto2.text = texto2
+                    Contador2.setTextColor(Color.parseColor("#d32f2f"))
+                    contador2 = 11
+                }
+                if (contador2 < 1 && texto2 == "Malas") {
+                    contador2 = 0
+                }
+                comparador(contador2,texto2,2)
+                cont2Str = contador2.toString()
+                Contador2.text = cont2Str
+            }
+        }
+
         BotonRonda1.setOnClickListener {
-            suma_puntuacion(2, 1)
-        }
+            suma_puntuacion(2, 1)}
         BotonParranda1.setOnClickListener {
-            suma_puntuacion(3, 1)
-        }
+            suma_puntuacion(3, 1)}
         BotonCaracol1.setOnClickListener {
-            suma_puntuacion(4, 1)
-        }
+            suma_puntuacion(4, 1)}
         BotonMajo1.setOnClickListener {
-            suma_puntuacion(1, 1)
-        }
+            suma_puntuacion(1, 1)}
         BotonBienda1.setOnClickListener {
-            suma_puntuacion(1, 1)
-        }
+            suma_puntuacion(1, 1)}
         BotonResta1.setOnClickListener {
-            contador1 = contador1 - 1
-            if (contador1 < 1 && texto1 == "Buenas") {        //pasamos de buenas a malas
-                texto1 = "Malas"
-                Texto1.text = texto1
-                Contador1.setTextColor(Color.parseColor("#d32f2f"))
-                contador1 = 11
-            }
-            if (contador1 < 1 && texto1 == "Malas") {
-                contador1 = 0
-            }
-            cont1Str = contador1.toString()
-            Contador1.text = cont1Str
-        }
+            resta_puntuacion(1)}
         BotonSuma1.setOnClickListener {
-            suma_puntuacion(1, 1)
-        }
+            suma_puntuacion(1, 1)}
 
         // EQUIPO 2
 
         BotonRonda2.setOnClickListener {
-            suma_puntuacion(2, 2)
-        }
+            suma_puntuacion(2, 2)}
         BotonParranda2.setOnClickListener {
-            suma_puntuacion(3, 2)
-        }
+            suma_puntuacion(3, 2)}
         BotonCaracol2.setOnClickListener {
-            suma_puntuacion(4, 2)
-        }
+            suma_puntuacion(4, 2)}
         BotonMajo2.setOnClickListener {
-            suma_puntuacion(1, 2)
-        }
+            suma_puntuacion(1, 2)}
         BotonBienda2.setOnClickListener {
-            suma_puntuacion(1, 2)
-        }
+            suma_puntuacion(1, 2)}
         BotonResta2.setOnClickListener {
-            contador2 = contador2 - 1
-            if (contador2 < 1 && texto2 == "Buenas") {        //pasamos de buenas a malas
-                texto2 = "Malas"
-                Texto2.text = texto2
-                Contador2.setTextColor(Color.parseColor("#d32f2f"))
-                contador2 = 11
-            }
-            if (contador2 < 1 && texto2 == "Malas") {
-                contador2 = 0
-            }
-            comparador(contador2,texto2,2)
-            cont2Str = contador2.toString()
-            Contador2.text = cont2Str
-        }
+            resta_puntuacion(2)}
         BotonSuma2.setOnClickListener {
-            suma_puntuacion(1, 2)
-        }
+            suma_puntuacion(1, 2)}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
