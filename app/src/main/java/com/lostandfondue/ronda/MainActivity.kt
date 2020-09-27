@@ -3,10 +3,8 @@ package com.lostandfondue.ronda
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
-import android.view.View
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
@@ -16,8 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     var contador1 = 0
     var contador2 = 0
-    var C1Str = ""
-    var C2Str = ""
+    var cont1Str = ""
+    var cont2Str = ""
     var texto1 = "Malas"
     var texto2 = "Malas"
 
@@ -99,13 +97,13 @@ class MainActivity : AppCompatActivity() {
             if (jugador == 1) {
                 contador1 += cantidad
                 comparador1(contador1, texto1)
-                C1Str = contador1.toString()
-                Contador1.text = C1Str
+                cont1Str = contador1.toString()
+                Contador1.text = cont1Str
             } else {
                 contador2 += cantidad
                 comparador2(contador2, texto2)
-                C2Str = contador2.toString()
-                Contador2.text = C2Str
+                cont2Str = contador2.toString()
+                Contador2.text = cont2Str
             }
         }
 
@@ -135,8 +133,8 @@ class MainActivity : AppCompatActivity() {
             if (contador1 < 1 && texto1 == "Malas") {
                 contador1 = 0
             }
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            cont1Str = contador1.toString()
+            Contador1.text = cont1Str
         }
         BotonSuma1.setOnClickListener {
             suma_puntuacion(1, 1)
@@ -171,8 +169,8 @@ class MainActivity : AppCompatActivity() {
                 contador2 = 0
             }
             comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            cont2Str = contador2.toString()
+            Contador2.text = cont2Str
         }
         BotonSuma2.setOnClickListener {
             suma_puntuacion(1, 2)
@@ -195,10 +193,10 @@ class MainActivity : AppCompatActivity() {
             R.id.menuNuevaPartida -> {
             contador1 = 0
             contador2 = 0
-                C1Str = contador1.toString()
-                Contador1.text = C1Str
-                C2Str = contador2.toString()
-                Contador2.text = C2Str
+                cont1Str = contador1.toString()
+                Contador1.text = cont1Str
+                cont2Str = contador2.toString()
+                Contador2.text = cont2Str
             texto1 = "Malas"
             texto2 = "Malas"
                 Texto1.text = texto1
