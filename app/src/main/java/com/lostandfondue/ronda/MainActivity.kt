@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         val BotonSuma2 = findViewById<Button>(R.id.BotonSuma2)
 
         //funcion que comprueba si vale mas de 11, cambia el texto de buenas/malas y reajusta el contador si hace falta
-
         fun comparador(contador: Int, texto: String, equipo: Int): Int {
             if (equipo == 1){
                 contador1 = contador
@@ -92,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //funcion para sumar x al equipo y
         fun suma_puntuacion(cantidad: Int, equipo: Int){
             if (equipo == 1) {
                 contador1 += cantidad
@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //funcion para restar 1 al equipo y
         fun resta_puntuacion(equipo: Int){
             if (equipo == 1) {
                 contador1 -= 1
