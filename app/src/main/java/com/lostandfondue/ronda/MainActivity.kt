@@ -181,21 +181,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun muestraAbout(view: View) {
-        //val editText = findViewById<EditText>(R.id.editText)
-        //val message = editText.text.toString()
-        val intent = Intent(this, Aboutpage::class.java).apply {
-            //putExtra(EXTRA_MESSAGE, message)
-        }
-        startActivity(intent)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
             R.id.menuAcercaDe -> {
-                //Toast.makeText(this@MainActivity, "test", Toast.LENGTH_SHORT).show()
-                //muestraAbout(view:View)
                 val intent = Intent(this, Aboutpage::class.java).apply {                }
                 startActivity(intent)
                 true
@@ -216,10 +205,8 @@ class MainActivity : AppCompatActivity() {
             texto2 = "Malas"
                 Texto1.text = texto1
                 Contador1.setTextColor(Color.parseColor("#d32f2f"))
-                //Texto1.setBackgroundColor(Color.parseColor("#ff0000"))
                 Texto2.text = texto2
                 Contador2.setTextColor(Color.parseColor("#d32f2f"))
-                //Texto2.setBackgroundColor(Color.parseColor("#ff0000"))
                 Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
                 true
             }
