@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     //Button buttonRonda
+    //var contador = 0
     var contador1 = 0
     var contador2 = 0
     var C1Str = ""
@@ -41,19 +42,6 @@ class MainActivity : AppCompatActivity() {
         val BotonBienda2 = findViewById<Button>(R.id.BotonBienda2)
         val BotonResta2 = findViewById<Button>(R.id.BotonResta2)
         val BotonSuma2 = findViewById<Button>(R.id.BotonSuma2)
-
-        //val menuAcercaDe = findViewById<MenuItem>(R.id.menuAcercaDe)
-
-
-
-
-        //menuAcercaDe.setOnClickListener {
-        //    onOptionsItemSelected(menuAcercaDe)
-            //Toast.makeText(this@MainActivity, "test", Toast.LENGTH_SHORT).show()
-        //}
-
-
-
 
         //funcion que comprueba si vale mas de 11, cambia el texto de buenas/malas y reajusta el contador si hace falta
 
@@ -91,7 +79,6 @@ class MainActivity : AppCompatActivity() {
                     texto2 = "Buenas"
                     Texto2.text = texto2
                     Contador2.setTextColor(Color.parseColor("#4caf50"))
-                    //Texto2.setBackgroundColor(Color.parseColor("#01ff90"))
                     contador2 = contador2 - 11
                     return contador2
                 } else {
@@ -109,37 +96,35 @@ class MainActivity : AppCompatActivity() {
             return contador2
         }
 
+        fun suma_puntuacion(cantidad: Int, jugador: Int){
+
+            if (jugador == 1) {
+                contador1 += cantidad
+                comparador1(contador1, texto1)
+                C1Str = contador1.toString()
+                Contador1.text = C1Str
+            } else {
+                contador2 += cantidad
+                comparador2(contador2, texto2)
+                C2Str = contador2.toString()
+                Contador2.text = C2Str
+            }
+        }
+
         BotonRonda1.setOnClickListener {
-            contador1 = contador1 + 2
-            comparador1(contador1,texto1)
-            // LLAMADA A LA FUNCION DE COMPARACION Y BUENAS / MALAS
-            C1Str = contador1.toString()
-            //Toast.makeText(this@MainActivity, C1Str, Toast.LENGTH_SHORT).show()
-            Contador1.text = C1Str
+            suma_puntuacion(2, 1)
         }
         BotonParranda1.setOnClickListener {
-            contador1 = contador1 + 3
-            comparador1(contador1,texto1)
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            suma_puntuacion(3, 1)
         }
         BotonCaracol1.setOnClickListener {
-            contador1 = contador1 + 4
-            comparador1(contador1,texto1)
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            suma_puntuacion(4, 1)
         }
         BotonMajo1.setOnClickListener {
-            contador1 = contador1 + 1
-            comparador1(contador1,texto1)
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            suma_puntuacion(1, 1)
         }
         BotonBienda1.setOnClickListener {
-            contador1 = contador1 + 1
-            comparador1(contador1,texto1)
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            suma_puntuacion(1, 1)
         }
         BotonResta1.setOnClickListener {
             contador1 = contador1 - 1
@@ -147,56 +132,34 @@ class MainActivity : AppCompatActivity() {
                 texto1 = "Malas"
                 Texto1.text = texto1
                 Contador1.setTextColor(Color.parseColor("#d32f2f"))
-                //Texto1.setBackgroundColor(Color.parseColor("#ff0000"))
                 contador1 = 11
             }
             if (contador1 < 1 && texto1 == "Malas") {
                 contador1 = 0
             }
-            //comparador1(contador1,texto1)
             C1Str = contador1.toString()
             Contador1.text = C1Str
         }
         BotonSuma1.setOnClickListener {
-            contador1 = contador1 + 1
-            comparador1(contador1,texto1)
-            C1Str = contador1.toString()
-            Contador1.text = C1Str
+            suma_puntuacion(1, 1)
         }
 
         // EQUIPO 2
 
         BotonRonda2.setOnClickListener {
-            contador2 = contador2 + 2
-            comparador2(contador2,texto2)
-            // LLAMADA A LA FUNCION DE COMPARACION Y BUENAS / MALAS
-            C2Str = contador2.toString()
-            //Toast.makeText(this@MainActivity, C1Str, Toast.LENGTH_SHORT).show()
-            Contador2.text = C2Str
+            suma_puntuacion(2, 2)
         }
         BotonParranda2.setOnClickListener {
-            contador2 = contador2 + 3
-            comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            suma_puntuacion(3, 2)
         }
         BotonCaracol2.setOnClickListener {
-            contador2 = contador2 + 4
-            comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            suma_puntuacion(4, 2)
         }
         BotonMajo2.setOnClickListener {
-            contador2 = contador2 + 1
-            comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            suma_puntuacion(1, 2)
         }
         BotonBienda2.setOnClickListener {
-            contador2 = contador2 + 1
-            comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            suma_puntuacion(1, 2)
         }
         BotonResta2.setOnClickListener {
             contador2 = contador2 - 1
@@ -204,7 +167,6 @@ class MainActivity : AppCompatActivity() {
                 texto2 = "Malas"
                 Texto2.text = texto2
                 Contador2.setTextColor(Color.parseColor("#d32f2f"))
-                //Texto2.setBackgroundColor(Color.parseColor("#ff0000"))
                 contador2 = 11
             }
             if (contador2 < 1 && texto2 == "Malas") {
@@ -215,16 +177,9 @@ class MainActivity : AppCompatActivity() {
             Contador2.text = C2Str
         }
         BotonSuma2.setOnClickListener {
-            contador2 = contador2 + 1
-            comparador2(contador2,texto2)
-            C2Str = contador2.toString()
-            Contador2.text = C2Str
+            suma_puntuacion(1, 2)
         }
-
-
-
     }
-
 
     fun muestraAbout(view: View) {
         //val editText = findViewById<EditText>(R.id.editText)
@@ -271,9 +226,6 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.topbar, menu)
