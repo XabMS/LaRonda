@@ -1,6 +1,8 @@
 package com.lostandfondue.ronda
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -204,14 +206,39 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-            R.id.menuNuevaPartida -> reset()
+            R.id.menuNuevaPartida -> Alert()
 
 
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    fun Alert(): Boolean {
+        // build alert dialog
+        val dialogBuilder = AlertDialog.Builder(this)
 
+        // set message of alert dialog
+        //dialogBuilder.setMessage("¿Seguro que quieres reiniciar?")
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton("Sí", DialogInterface.OnClickListener {
+                    dialog, id -> reset()
+            })
+            // negative button text and action
+            .setNegativeButton("No", DialogInterface.OnClickListener {
+                    dialog, id -> dialog.cancel()
+            })
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle("¿Seguro que quieres reiniciar?")
+        // show alert dialog
+        alert.show()
+
+        return true
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.topbar, menu)
