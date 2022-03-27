@@ -1,12 +1,17 @@
 package com.lostandfondue.ronda
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -139,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         BotonRonda1.setOnClickListener {
-            suma_puntuacion(2, 1)}
+            suma_puntuacion(1, 1)}
         BotonParranda1.setOnClickListener {
             suma_puntuacion(3, 1)}
         BotonCaracol1.setOnClickListener {
@@ -156,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         // EQUIPO 2
 
         BotonRonda2.setOnClickListener {
-            suma_puntuacion(2, 2)}
+            suma_puntuacion(1, 2)}
         BotonParranda2.setOnClickListener {
             suma_puntuacion(3, 2)}
         BotonCaracol2.setOnClickListener {
@@ -169,6 +174,23 @@ class MainActivity : AppCompatActivity() {
             resta_puntuacion(2)}
         BotonSuma2.setOnClickListener {
             suma_puntuacion(1, 2)}
+    }
+
+    fun reset(): Boolean {
+        contador1 = 0
+        contador2 = 0
+        cont1Str = contador1.toString()
+        Contador1.text = cont1Str
+        cont2Str = contador2.toString()
+        Contador2.text = cont2Str
+        texto1 = "Malas"
+        texto2 = "Malas"
+        Texto1.text = texto1
+        Contador1.setTextColor(Color.parseColor("#d32f2f"))
+        Texto2.text = texto2
+        Contador2.setTextColor(Color.parseColor("#d32f2f"))
+        Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -184,24 +206,38 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-            R.id.menuNuevaPartida -> {
-            contador1 = 0
-            contador2 = 0
-                cont1Str = contador1.toString()
-                Contador1.text = cont1Str
-                cont2Str = contador2.toString()
-                Contador2.text = cont2Str
-            texto1 = "Malas"
-            texto2 = "Malas"
-                Texto1.text = texto1
-                Contador1.setTextColor(Color.parseColor("#d32f2f"))
-                Texto2.text = texto2
-                Contador2.setTextColor(Color.parseColor("#d32f2f"))
-                Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
-                true
-            }
+            R.id.menuNuevaPartida -> Alert()
+
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun Alert(): Boolean {
+        // build alert dialog
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        // set message of alert dialog
+        //dialogBuilder.setMessage("¿Seguro que quieres reiniciar?")
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton("Sí", DialogInterface.OnClickListener {
+                    dialog, id -> reset()
+            })
+            // negative button text and action
+            .setNegativeButton("No", DialogInterface.OnClickListener {
+                    dialog, id -> dialog.cancel()
+            })
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle("¿Seguro que quieres reiniciar?")
+        // show alert dialog
+        alert.show()
+
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
