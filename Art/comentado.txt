@@ -1,0 +1,332 @@
+//Otras cosas que se pueden hacer. No fijar los valores de ronda, parranda, resta, etc, parametrizar
+//Es un poco lioso si los arrays son 0,1,... y los equipos 1,2,... Puedes cambiar los nombres de los botones y los equipos a 0 y 1
+// o hacer los arrays de tamaño 3, usas 1 y 2 y dejas 0 vacío, pero lo otro es mejor.
+// o dejarlo como está y tener cuidado
+//Y lo último, todos los valores que tienes al principio (los var y const var) pueden coger los valores de un archivo de configuración. Eso te permite tener 
+// un solo ejecutable y cambiando la configuracion puedes cambiar las reglas/idioma/colores (dark mode/light mode)
+//En general el uso de arrays te puede limpiar mucho el codigo, pero ni idea de como se hace en Kotlin, a lo mejor hay opciones mas comodas como Vector etc
+
+
+package com.lostandfondue.ronda
+
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
+import android.view.Menu
+import android.view.View
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+
+    //Button buttonRonda
+	const var strBuenas = "Buenas" 					//Cuando quieras traducir la app, solo tienes que cambiar el valor de esto segun el idioma y listo
+	const var strMalas = "Malas" 
+    var contador1 = 0 								//Hazlo en un array, contador[x], de tamaño 2 (luego veras porqué. No se como se hace en Kotlin
+    //var contador2 = 0
+    var C1Str = "" 									//Sobra, y se consistente, o bien CamelCase para todas las variables, o camelCase, no mezcles (es mejor camelCase, mas habitual)
+    var C2Str = "" 									//Sobra
+    var texto1 = strMalas 							//Hazlo en un array, texto[x], de tamaño 2
+    //var texto2 = strMalas
+	const var colorVerde = "#4caf50"				//Parametrizar
+	const var colorRojo = "#d32f2f"
+	const var maxMalas = 11
+	const var maxBuenas = 10
+
+	
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val BotonRonda1 = findViewById<Button>(R.id.BotonRonda1) //crear uno para cada boton
+        val BotonParranda1 = findViewById<Button>(R.id.BotonParranda1)
+        val BotonCaracol1 = findViewById<Button>(R.id.BotonCaracol1)
+        val BotonMajo1 = findViewById<Button>(R.id.BotonMajo1)
+        val BotonBienda1 = findViewById<Button>(R.id.BotonBienda1)
+        val BotonResta1 = findViewById<Button>(R.id.BotonResta1)
+        val BotonSuma1 = findViewById<Button>(R.id.BotonSuma1)
+
+        val BotonRonda2 = findViewById<Button>(R.id.BotonRonda2) //crear uno para cada boton
+        val BotonParranda2 = findViewById<Button>(R.id.BotonParranda2)
+        val BotonCaracol2 = findViewById<Button>(R.id.BotonCaracol2)
+        val BotonMajo2 = findViewById<Button>(R.id.BotonMajo2)
+        val BotonBienda2 = findViewById<Button>(R.id.BotonBienda2)
+        val BotonResta2 = findViewById<Button>(R.id.BotonResta2)
+        val BotonSuma2 = findViewById<Button>(R.id.BotonSuma2)
+
+        //val menuAcercaDe = findViewById<MenuItem>(R.id.menuAcercaDe)
+
+
+
+
+        //menuAcercaDe.setOnClickListener {
+        //    onOptionsItemSelected(menuAcercaDe)
+            //Toast.makeText(this@MainActivity, "test", Toast.LENGTH_SHORT).show()
+        //}
+
+
+		fun updateScreen(): Unit{													//Puedes hacer que coja parametro equipo y solo actualizar la mitad, pero la mejora
+																					//en rendimiento seguramente sea mínima
+			if (texto[0] == strBuenas) {							 				//Kotlin no tiene condicionales ternarios :( asi que en vez de 1 linea bonita, chorrocientas (o 1 fea)
+				Contador1.setTextColor(Color.parseColor(colorVerde))				//Con ternarios podrñia ser:
+			else if (texto[0] == strMalas){											//Contador1.setTextColor(Color.parseColor((texto[0] == strBuenas)? colorVerde : colorRojo))
+				Contador1.setTextColor(Color.parseColor(colorRojo))					//Basicamente (condicion)? si_verdadero : si_falso
+			}
+			if (texto[1] == strBuenas) {							 	
+				Contador2.setTextColor(Color.parseColor(colorVerde))	
+			else if (texto[1] == strMalas){							
+				Contador2.setTextColor(Color.parseColor(colorRojo))
+			}
+			Texto1.text = texto[0]
+			Texto2.text = texto[1]
+			Contador1.text = contador[0].toString()									//Me imagino que esto es legal en Kotlin
+			Contador2.text = contador[1].toString()
+		}
+
+        //funcion que comprueba si vale mas de 11, cambia el texto de buenas/malas y reajusta el contador si hace falta
+
+        fun comparador1(numero: Int, strBuenasMalas: String, equipo: Int): Unit {	//La funcion no deberia devolver nada (nadie lo recibe y es confuso)
+																					//Tienes al menos 2 opciones, return 0, que en general significa, no hay errores
+																					//O no devolver nada, que es lo que he implementado
+																					//Fusiona contador1 y contador2 (el principio DRY)
+																					//Haz una sola función y pasa otra variable (por ejemplo Int equipo) para
+																					//distinguir quien gana
+            //texto1 = texto														//Pa que? estas haciendo un write seguido de un read (la condicion) en la misma variable
+																					//Malo para el rendimiento, si no me crees te lo explico luego (pero tampoco importa)
+            if (strBuenasMalas == strMalas) {										//Mejor no? me extrañaría que Kotlin no te dejara
+                if (numero > maxMalas) {											//Si decides poner un modo con otras normas, es mas comodo de cambiar
+                    texto[equipo] = strBuenas										//Mas limpito
+                    //Texto1.text = texto1											//Esto lo arreglamos con una funcion que haga update a todo
+                    //Contador1.setTextColor(Color.parseColor(colorVerde))			//Y es mejor no mezclar tareas, no es untuitivo que comparador cambie el color de algo
+                    //Texto1.setBackgroundColor(Color.parseColor("#01ff90"))
+                    contador[equipo] = contador[equipo] - maxMalas					//Es mas bonito si pones contador[equipo] -= maxMalas, si Kotlin lo permite
+                }else if (numero < 0){
+					contador[equipo] = 0
+				}
+
+            } else {
+                if (numero > maxBuenas - 1) {										//Lo mismo de antes, parametrizar
+                    contador[equipo] = maxBuenas									//parametrizar
+                    //Toast.makeText(this@MainActivity, "EQUIPO 1 GANA", Toast.LENGTH_SHORT).show() //Tambien en la función update
+                }
+            }else if (numero < 0){
+				contador[equipo] = 11
+				texto[equipo] = strMalas
+			}
+			//return 0																// Si quieres devolver algo, solo necesitas este return, todos los demás son innecesarios
+        }
+		
+
+        // fun comparador2(contador: Int, texto: String): Int {						//Sobra toda la función, estas repitiendo el mismo codigo en 2 sitios
+																					//tienes que usar el DRY principle (Dont Repeat Yourself)
+																					//Haz una sola función y pasa otra variable (por ejemplo Int equipo) para
+																					//distinguir quien gana
+            // contador2 = contador
+            // texto2 = texto
+            // if (texto2 == "Malas") {
+                // if (contador > 11) {
+                    // texto2 = "Buenas"
+                    // Texto2.text = texto2
+                    // Contador2.setTextColor(Color.parseColor("#4caf50"))
+                    // //Texto2.setBackgroundColor(Color.parseColor("#01ff90"))
+                    // contador2 = contador2 - 11
+                    // return contador2
+                // } else {
+                    // return contador2
+                // }
+
+            // } else {
+                // if (contador > 9) {
+                    // contador2 = 10
+                    // Toast.makeText(this@MainActivity, "EQUIPO 2 GANA", Toast.LENGTH_SHORT).show()
+                // } else {
+                    // return contador2
+                // }
+            // }
+            // return contador2
+        // }
+		
+		fun accionRonda(equipo: Int): Unit{
+			contador[equipo] += 2														//esto es muy de C, a lo mejor Kotlin no te deja
+			comparador(contador[equipo], texto[equipo], equipo)							//es mas largo, pero te evitas duplicados feos
+			updateScreen()
+		}
+
+        BotonRonda1.setOnClickListener {
+			accionRonda(0)																//Para evitar duplicados, haz una sola funcion para Ronda
+            // contador1 = contador1 + 2
+            // comparador1(contador1,texto1)
+            // // LLAMADA A LA FUNCION DE COMPARACION Y BUENAS / MALAS
+            // C1Str = contador1.toString()
+            // //Toast.makeText(this@MainActivity, C1Str, Toast.LENGTH_SHORT).show()
+            // Contador1.text = C1Str
+        }
+        BotonParranda1.setOnClickListener {												//Con todas las demas basicamente lo mismo que en BotonRonda1
+            contador1 = contador1 + 3
+            comparador1(contador1,texto1)
+            C1Str = contador1.toString()
+            Contador1.text = C1Str
+        }
+        BotonCaracol1.setOnClickListener {
+            contador1 = contador1 + 4
+            comparador1(contador1,texto1)
+            C1Str = contador1.toString()
+            Contador1.text = C1Str
+        }
+        BotonMajo1.setOnClickListener {
+            contador1 = contador1 + 1
+            comparador1(contador1,texto1)
+            C1Str = contador1.toString()
+            Contador1.text = C1Str
+        }
+        BotonBienda1.setOnClickListener {
+            contador1 = contador1 + 1
+            comparador1(contador1,texto1)
+            C1Str = contador1.toString()
+            Contador1.text = C1Str
+        }
+
+        BotonSuma1.setOnClickListener {
+            contador1 = contador1 + 1
+            comparador1(contador1,texto1)
+            C1Str = contador1.toString()
+            Contador1.text = C1Str
+        }
+		
+		BotonResta1.setOnClickListener {								
+            contador1 = contador1 - 1
+            if (contador1 < 1 && texto1 == strBuenas) {        							//tienes una funcion comparador para estas cosas...
+                texto1 = strmalas
+                texto1.text = texto1
+                contador1.settextcolor(color.parsecolor("#d32f2f"))
+                //texto1.setbackgroundcolor(color.parsecolor("#ff0000"))
+                contador1 = 11
+            }
+            if (contador1 < 1 && texto1 == strMalas) {
+                contador1 = 0
+            }
+            //comparador1(contador1,texto1)												//por que no lo hiciste? era una buena idea
+            c1str = contador1.tostring()
+            contador1.text = c1str
+        }
+
+        // EQUIPO 2
+
+        BotonRonda2.setOnClickListener {													//Casi todo esto se va, usa las acciones
+            accionRonda(1)																	//Por ejemplo
+        }
+        BotonParranda2.setOnClickListener {
+            contador2 = contador2 + 3
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+        BotonCaracol2.setOnClickListener {
+            contador2 = contador2 + 4
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+        BotonMajo2.setOnClickListener {
+            contador2 = contador2 + 1
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+        BotonBienda2.setOnClickListener {
+            contador2 = contador2 + 1
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+        BotonResta2.setOnClickListener {
+            contador2 = contador2 - 1
+            if (contador2 < 1 && texto2 == strBuenas) {        //pasamos de buenas a malas
+                texto2 = strMalas
+                Texto2.text = texto2
+                Contador2.setTextColor(Color.parseColor("#d32f2f"))
+                //Texto2.setBackgroundColor(Color.parseColor("#ff0000"))
+                contador2 = 11
+            }
+            if (contador2 < 1 && texto2 == strMalas) {
+                contador2 = 0
+            }
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+        BotonSuma2.setOnClickListener {
+            contador2 = contador2 + 1
+            comparador2(contador2,texto2)
+            C2Str = contador2.toString()
+            Contador2.text = C2Str
+        }
+
+
+
+    }
+
+
+    fun muestraAbout(view: View) {
+        //val editText = findViewById<EditText>(R.id.editText)
+        //val message = editText.text.toString()
+        val intent = Intent(this, Aboutpage::class.java).apply {
+            //putExtra(EXTRA_MESSAGE, message)
+        }
+        startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.menuAcercaDe -> {
+                //Toast.makeText(this@MainActivity, "test", Toast.LENGTH_SHORT).show()
+                //muestraAbout(view:View)
+                val intent = Intent(this, Aboutpage::class.java).apply {                }
+                startActivity(intent)
+                true
+            }
+            R.id.menuReglas -> {
+                val intent = Intent(this, Reglas::class.java).apply {                }
+                startActivity(intent)
+                true
+            }
+            R.id.menuNuevaPartida -> {
+            contador1 = 0
+            contador2 = 0
+                C1Str = contador1.toString()
+                Contador1.text = C1Str
+                C2Str = contador2.toString()
+                Contador2.text = C2Str
+            texto1 = strMalas
+            texto2 = strMalas
+                Texto1.text = texto1
+                Contador1.setTextColor(Color.parseColor("#d32f2f"))
+                //Texto1.setBackgroundColor(Color.parseColor("#ff0000"))
+                Texto2.text = texto2
+                Contador2.setTextColor(Color.parseColor("#d32f2f"))
+                //Texto2.setBackgroundColor(Color.parseColor("#ff0000"))
+                Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.topbar, menu)
+        return true
+    }
+
+
+
+
+}
