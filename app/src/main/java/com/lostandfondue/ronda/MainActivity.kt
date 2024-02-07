@@ -13,7 +13,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import com.lostandfondue.ronda.databinding.ActivityMainBinding
+
+//import kotlinx.android.synthetic.main.activity_main.*
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +27,15 @@ class MainActivity : AppCompatActivity() {
     var cont2Str = ""
     var texto1 = "Malas"
     var texto2 = "Malas"
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
 
         val BotonRonda1 = findViewById<Button>(R.id.BotonRonda1) //crear uno para cada boton
         val BotonParranda1 = findViewById<Button>(R.id.BotonParranda1)
@@ -52,8 +61,8 @@ class MainActivity : AppCompatActivity() {
                 if (texto1 == "Malas") {
                     if (contador > 11) {
                         texto1 = "Buenas"
-                        Texto1.text = texto1
-                        Contador1.setTextColor(Color.parseColor("#4caf50"))
+                        binding.Texto1.text = texto1
+                        binding.Contador1.setTextColor(Color.parseColor("#4caf50"))
                         contador1 -= 11
                         return contador1
                     } else {
@@ -76,8 +85,8 @@ class MainActivity : AppCompatActivity() {
                 if (texto2 == "Malas") {
                     if (contador > 11) {
                         texto2 = "Buenas"
-                        Texto2.text = texto2
-                        Contador2.setTextColor(Color.parseColor("#4caf50"))
+                        binding.Texto2.text = texto2
+                        binding.Contador2.setTextColor(Color.parseColor("#4caf50"))
                         contador2 = contador2 - 11
                         return contador2
                     } else {
@@ -102,12 +111,12 @@ class MainActivity : AppCompatActivity() {
                 contador1 += cantidad
                 comparador(contador1, texto1,1)
                 cont1Str = contador1.toString()
-                Contador1.text = cont1Str
+                binding.Contador1.text = cont1Str
             } else {
                 contador2 += cantidad
                 comparador(contador2, texto2,2)
                 cont2Str = contador2.toString()
-                Contador2.text = cont2Str
+                binding.Contador2.text = cont2Str
             }
         }
 
@@ -117,21 +126,21 @@ class MainActivity : AppCompatActivity() {
                 contador1 -= 1
                 if (contador1 < 1 && texto1 == "Buenas") {        //pasamos de buenas a malas
                     texto1 = "Malas"
-                    Texto1.text = texto1
-                    Contador1.setTextColor(Color.parseColor("#d32f2f"))
+                    binding.Texto1.text = texto1
+                    binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
                     contador1 = 11
                 }
                 if (contador1 < 1 && texto1 == "Malas") {
                     contador1 = 0
                 }
                 cont1Str = contador1.toString()
-                Contador1.text = cont1Str
+                binding.Contador1.text = cont1Str
             } else {
                 contador2 -= 1
                 if (contador2 < 1 && texto2 == "Buenas") {        //pasamos de buenas a malas
                     texto2 = "Malas"
-                    Texto2.text = texto2
-                    Contador2.setTextColor(Color.parseColor("#d32f2f"))
+                    binding.Texto2.text = texto2
+                    binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
                     contador2 = 11
                 }
                 if (contador2 < 1 && texto2 == "Malas") {
@@ -139,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 comparador(contador2,texto2,2)
                 cont2Str = contador2.toString()
-                Contador2.text = cont2Str
+                binding.Contador2.text = cont2Str
             }
         }
 
@@ -180,15 +189,15 @@ class MainActivity : AppCompatActivity() {
         contador1 = 0
         contador2 = 0
         cont1Str = contador1.toString()
-        Contador1.text = cont1Str
+        binding.Contador1.text = cont1Str
         cont2Str = contador2.toString()
-        Contador2.text = cont2Str
+        binding.Contador2.text = cont2Str
         texto1 = "Malas"
         texto2 = "Malas"
-        Texto1.text = texto1
-        Contador1.setTextColor(Color.parseColor("#d32f2f"))
-        Texto2.text = texto2
-        Contador2.setTextColor(Color.parseColor("#d32f2f"))
+        binding.Texto1.text = texto1
+        binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
+        binding.Texto2.text = texto2
+        binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
         Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
         return true
     }
