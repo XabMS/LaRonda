@@ -1,22 +1,15 @@
 package com.lostandfondue.ronda
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import android.widget.PopupMenu
 import android.widget.Toast
 import com.lostandfondue.ronda.databinding.ActivityMainBinding
-
-//import kotlinx.android.synthetic.main.activity_main.*
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -64,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                         binding.Texto1.text = texto1
                         binding.Contador1.setTextColor(Color.parseColor("#4caf50"))
                         contador1 -= 11
-                        return contador1
                     } else {
                         return contador1
                     }
@@ -87,8 +79,7 @@ class MainActivity : AppCompatActivity() {
                         texto2 = "Buenas"
                         binding.Texto2.text = texto2
                         binding.Contador2.setTextColor(Color.parseColor("#4caf50"))
-                        contador2 = contador2 - 11
-                        return contador2
+                        contador2 -= 11
                     } else {
                         return contador2
                     }
@@ -231,13 +222,13 @@ class MainActivity : AppCompatActivity() {
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
-            .setPositiveButton("Sí", DialogInterface.OnClickListener {
-                    dialog, id -> reset()
-            })
+            .setPositiveButton("Sí") { dialog, id ->
+                reset()
+            }
             // negative button text and action
-            .setNegativeButton("No", DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-            })
+            .setNegativeButton("No") { dialog, id ->
+                dialog.cancel()
+            }
 
         // create dialog box
         val alert = dialogBuilder.create()
