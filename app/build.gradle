@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
 
 android {
-    //compileSdkVersion 34
     defaultConfig {
         compileSdk 34
     }
@@ -28,7 +26,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    //buildToolsVersion '34.0.0'
     namespace 'com.lostandfondue.ronda'
 
     buildFeatures {
