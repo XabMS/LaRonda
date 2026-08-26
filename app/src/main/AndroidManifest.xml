@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Reglas" />
+        <activity
+            android:name=".Reglas"
+            android:exported="false"
+            android:label="@string/reglas_title" />
         <activity
             android:name=".Aboutpage"
+            android:exported="false"
             android:label="@string/AboutPage" />
         <activity
             android:name=".MainActivity"

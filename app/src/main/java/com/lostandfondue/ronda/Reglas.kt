@@ -18,5 +18,15 @@ class Reglas : AppCompatActivity() {
         // detrás de la barra de estado (ver InsetsExt.kt).
         findViewById<View>(android.R.id.content).applySystemBarInsetsAsPadding()
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+        // Sin esto el Toolbar no ofrece salida: sólo se podía volver con el
+        // gesto/botón "atrás" del sistema.
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    // La flecha del Toolbar cierra esta pantalla y devuelve a [MainActivity]
+    // tal y como estaba (sin recrearla, para no perder el marcador).
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
