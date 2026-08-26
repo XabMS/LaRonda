@@ -1,20 +1,49 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Tema de la app: Material 3, con modo oscuro automático (DayNight,
+         ver values-night/colors.xml) y sin ActionBar clásica — cada
+         pantalla trae su propio MaterialToolbar (ver activity_*.xml). -->
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorPrimaryContainer">@color/primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/onPrimaryContainer</item>
+        <item name="colorSecondary">@color/verde</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorSecondaryContainer">@color/secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/onSecondaryContainer</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+        <item name="colorSurfaceVariant">@color/surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/onSurfaceVariant</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="android:colorBackground">@color/surface</item>
+        <item name="colorOnBackground">@color/onSurface</item>
     </style>
 
-    <style name="AppTheme.ActionBar">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
+    <!-- Botones de puntuación (Ronda/Parranda/Caracol/Majo/Bien Dá): mismo
+         estilo "tonal" de Material3 pero neutralizado a gris de superficie
+         en vez del verde de colorSecondaryContainer (ese verde ahora se usa
+         solo para el botón "+1", ver Widget.App.Button.Positivo). -->
+    <style name="Widget.App.Button.Neutral" parent="Widget.Material3.Button.TonalButton">
+        <item name="backgroundTint">?attr/colorSurfaceVariant</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <!-- Botón "+1": mismo Outlined button de siempre, resaltado en verde
+         (reutilizando el color semántico de "Buenas"). -->
+    <style name="Widget.App.Button.Positivo" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/buenas</item>
+        <item name="android:textColor">@color/buenas</item>
+        <item name="rippleColor">@color/buenas</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- Botón "-1": mismo Outlined button de siempre, resaltado en rojo
+         (reutilizando el color semántico de "Malas"). -->
+    <style name="Widget.App.Button.Negativo" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/malas</item>
+        <item name="android:textColor">@color/malas</item>
+        <item name="rippleColor">@color/malas</item>
+    </style>
 
 </resources>

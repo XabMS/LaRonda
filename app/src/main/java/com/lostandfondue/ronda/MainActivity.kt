@@ -9,7 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.card.MaterialCardView
 import com.lostandfondue.ronda.databinding.ActivityMainBinding
+import java.util.Locale
 
 // --- Reglas de puntuación de "La Ronda" ---
 // El marcador de cada equipo pasa por dos fases: "Malas" (0-11) y "Buenas" (0-9).
@@ -50,6 +52,7 @@ private class Marcador(
     private val nombreEquipo: String,
     private val contadorView: TextView,
     private val textoView: TextView,
+    private val cardView: MaterialCardView,
     private val onGana: (String) -> Unit,
 ) {
     private var puntuacion = 0
@@ -103,10 +106,13 @@ private class Marcador(
 
     /** Refleja puntuacion/esBuenas en las vistas: número, texto y color. */
     private fun actualizarVistas() {
-        contadorView.text = puntuacion.toString()
+        contadorView.text = String.format(Locale.getDefault(), "%d", puntuacion)
         textoView.text = if (esBuenas) "Buenas" else "Malas"
         val color = if (esBuenas) R.color.buenas else R.color.malas
         contadorView.setTextColor(ContextCompat.getColor(contadorView.context, color))
+        // Tinte muy ligero de la caja del marcador según la fase (ver colors.xml).
+        val cardTint = if (esBuenas) R.color.cardTintBuenas else R.color.cardTintMalas
+        cardView.setCardBackgroundColor(ContextCompat.getColor(cardView.context, cardTint))
     }
 }
 
@@ -128,13 +134,16 @@ class MainActivity : AppCompatActivity() {
         // Necesario desde targetSdk 36: sin esto el contenido se dibuja
         // detrás de la barra de estado / la ActionBar (ver InsetsExt.kt).
         binding.root.applySystemBarInsetsAsPadding()
+        // El Toolbar de esta pantalla hace de ActionBar (menú incluido);
+        // ya no usamos la ActionBar clásica del sistema.
+        setSupportActionBar(binding.toolbar)
 
         // Mismo Toast de victoria para los dos equipos, parametrizado por nombre.
         val onGana: (String) -> Unit = { nombreEquipo ->
             Toast.makeText(this, "$nombreEquipo GANA", Toast.LENGTH_SHORT).show()
         }
-        equipo1 = Marcador("EQUIPO 1", binding.Contador1, binding.Texto1, onGana)
-        equipo2 = Marcador("EQUIPO 2", binding.Contador2, binding.Texto2, onGana)
+        equipo1 = Marcador("EQUIPO 1", binding.Contador1, binding.Texto1, binding.CardMarcador1, onGana)
+        equipo2 = Marcador("EQUIPO 2", binding.Contador2, binding.Texto2, binding.CardMarcador2, onGana)
 
         // Botones del equipo 1: cada uno suma los puntos de su combinación,
         // salvo "-1" que resta y "+1" que ajusta manualmente el marcador.

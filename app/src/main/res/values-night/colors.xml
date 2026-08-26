@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Solo se redefinen los roles de superficie/contenedor: el color de
+         marca (colorPrimary, verde) se mantiene igual que en modo claro. -->
+    <color name="primaryContainer">#004A7D</color>
+    <color name="onPrimaryContainer">#D3E4FF</color>
+    <color name="secondaryContainer">#0B5D16</color>
+    <color name="onSecondaryContainer">#C6F6C6</color>
+    <color name="surface">#121316</color>
+    <color name="onSurface">#E3E2E6</color>
+    <color name="surfaceVariant">#292C31</color>
+    <color name="onSurfaceVariant">#C3C7CF</color>
+    <color name="outline">#8D9199</color>
+
+    <!-- Mismos tintes que en modo claro pero mezclados sobre la base oscura
+         de surfaceVariant en vez de la clara (ver values/colors.xml). -->
+    <color name="cardTintMalas">#432C31</color>
+    <color name="cardTintBuenas">#2E4036</color>
+</resources>
