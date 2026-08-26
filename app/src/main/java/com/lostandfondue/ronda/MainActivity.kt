@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        view.applySystemBarInsetsAsPadding()
 
 
         val BotonRonda1 = findViewById<Button>(R.id.BotonRonda1) //crear uno para cada boton
