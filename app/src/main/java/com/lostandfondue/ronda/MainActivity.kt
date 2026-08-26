@@ -2,7 +2,6 @@ package com.lostandfondue.ronda
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -10,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import com.lostandfondue.ronda.databinding.ActivityMainBinding
+import androidx.core.graphics.toColorInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     if (contador > 11) {
                         texto1 = "Buenas"
                         binding.Texto1.text = texto1
-                        binding.Contador1.setTextColor(Color.parseColor("#4caf50"))
+                        binding.Contador1.setTextColor("#4caf50".toColorInt())
                         contador1 -= 11
                     } else {
                         return contador1
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     if (contador > 11) {
                         texto2 = "Buenas"
                         binding.Texto2.text = texto2
-                        binding.Contador2.setTextColor(Color.parseColor("#4caf50"))
+                        binding.Contador2.setTextColor("#4caf50".toColorInt())
                         contador2 -= 11
                     } else {
                         return contador2
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                 if (contador1 < 1 && texto1 == "Buenas") {        //pasamos de buenas a malas
                     texto1 = "Malas"
                     binding.Texto1.text = texto1
-                    binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
+                    binding.Contador1.setTextColor("#d32f2f".toColorInt())
                     contador1 = 11
                 }
                 if (contador1 < 1 && texto1 == "Malas") {
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 if (contador2 < 1 && texto2 == "Buenas") {        //pasamos de buenas a malas
                     texto2 = "Malas"
                     binding.Texto2.text = texto2
-                    binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
+                    binding.Contador2.setTextColor("#d32f2f".toColorInt())
                     contador2 = 11
                 }
                 if (contador2 < 1 && texto2 == "Malas") {
@@ -187,9 +187,9 @@ class MainActivity : AppCompatActivity() {
         texto1 = "Malas"
         texto2 = "Malas"
         binding.Texto1.text = texto1
-        binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
+        binding.Contador1.setTextColor("#d32f2f".toColorInt())
         binding.Texto2.text = texto2
-        binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
+        binding.Contador2.setTextColor("#d32f2f".toColorInt())
         Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
         return true
     }
@@ -207,14 +207,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-            R.id.menuNuevaPartida -> Alert()
+            R.id.menuNuevaPartida -> alert()
 
 
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun Alert(): Boolean {
+    fun alert(): Boolean {
         // build alert dialog
         val dialogBuilder = AlertDialog.Builder(this)
 
@@ -223,11 +223,11 @@ class MainActivity : AppCompatActivity() {
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
-            .setPositiveButton("Sí") { dialog, id ->
+            .setPositiveButton("Sí") { _, _ ->
                 reset()
             }
             // negative button text and action
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
 
