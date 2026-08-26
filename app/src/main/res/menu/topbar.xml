@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menuNuevaPartida"
         android:orderInCategory="100"
-        android:title="Nueva Partida"
+        android:title="@string/menu_nueva_partida"
         app:showAsAction="never" />
 
     <item
@@ -12,12 +12,12 @@
         android:checkable="false"
         android:enabled="true"
         android:orderInCategory="200"
-        android:title="Acerca de"
+        android:title="@string/AboutPage"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menuReglas"
         android:orderInCategory="300"
-        android:title="Reglas del juego"
+        android:title="@string/reglas_title"
         app:showAsAction="never" />
 </menu>

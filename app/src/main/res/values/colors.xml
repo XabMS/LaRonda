@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores de marca originales. colorPrimary y verde se reutilizan
+         como primary/secondary del tema Material 3 (ver styles.xml). -->
     <color name="colorPrimary">#1b71b0</color>
-    <color name="colorPrimaryDark">#080808</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="fondo">#00802B</color>
-    <color name="blanco">#FFFFFF</color>
-    <color name="rojo">#ff0000</color>
     <color name="verde">#00b300</color>
+
+    <!-- Colores de estado del marcador (fase Malas/Buenas). Se mantienen
+         igual en modo claro y oscuro a propósito: son colores semánticos,
+         no de tema. Usados directamente desde MainActivity.kt. -->
     <color name="malas">#d32f2f</color>
     <color name="buenas">#4caf50</color>
+
+    <!-- Tintes muy suaves de las cajas del marcador según la fase
+         (Malas/Buenas) — mezcla de colorSurfaceVariant con malas/buenas al
+         ~15%. Redefinidos en modo oscuro porque la base (surfaceVariant) es
+         mucho más oscura ahí. Ver Marcador.actualizarVistas() en Kotlin. -->
+    <color name="cardTintMalas">#DFC9CC</color>
+    <color name="cardTintBuenas">#CBDCD1</color>
+
+    <!-- Texto fijo (no sigue el tema claro/oscuro) para las etiquetas que
+         van directamente sobre el fondo degradado de la pantalla principal
+         (ver drawable/gradient.xml): ese fondo es siempre claro, así que el
+         texto debe quedarse oscuro también en modo oscuro. -->
+    <color name="textoSobreGradiente">#1A1C1E</color>
+
+    <!-- Roles de color Material 3. Los que tienen sentido distinto en modo
+         oscuro se redefinen en values-night/colors.xml; colorPrimary y
+         verde (colorSecondary) se mantienen iguales en los dos modos. -->
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#D3E4FF</color>
+    <color name="onPrimaryContainer">#001C38</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#C6F6C6</color>
+    <color name="onSecondaryContainer">#00390A</color>
+    <color name="surface">#FBFBF7</color>
+    <color name="onSurface">#1A1C1E</color>
+    <color name="surfaceVariant">#E1E4E8</color>
+    <color name="onSurfaceVariant">#43474E</color>
+    <color name="outline">#73777F</color>
 </resources>

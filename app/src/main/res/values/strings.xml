@@ -1,5 +1,36 @@
 <resources>
     <string name="app_name">La Ronda</string>
     <string name="Equipo_1">Equipo 1</string>
+    <string name="Equipo_2">Equipo 2</string>
     <string name="AboutPage">Acerca de</string>
+    <string name="reglas_title">Reglas del juego</string>
+    <string name="marcador_inicial">0</string>
+    <string name="fase_malas">Malas</string>
+    <string name="fase_buenas">Buenas</string>
+    <string name="boton_ronda">Ronda</string>
+    <string name="boton_parranda">Parranda</string>
+    <string name="boton_caracol">Caracol</string>
+    <string name="boton_majo">Majo</string>
+    <string name="boton_bienda">Bien Dá</string>
+    <string name="boton_resta">-1</string>
+    <string name="boton_suma">+1</string>
+    <string name="reglas_basicos_titulo">Los básicos</string>
+    <string name="reglas_pantalla_titulo">Reglas del Juego</string>
+    <string name="reglas_basicos_lista">- 4 Jugadores\n- 40 cartas\n- Esta App\n- Una sólida amistad</string>
+    <string name="reglas_como_jugar_titulo">Cómo Jugar</string>
+    <string name="reglas_como_jugar_texto">Primero hay que formar 2 equipos de 2 sentados de forma alterna.  \n\nPrimera fase del juego:\nEl jugador más joven baraja las cartas y después el jugador a su izquierda corta el mazo. El que ha cortado extrae 4 cartas y las coloca sobre la mesa boca arriba una a una. \n\nSe pueden dar los siguientes casos: \n\n- Todos los números son diferentes - El equipo que barajó el mazo, se ARRAYA UN MILLO, o lo que es lo mismo, se lleva 1 punto (la BIENDÁ). \n- Si se repite algún número no se dan puntos y hay que cambiar la carta repetida por la siguiente del mazo.\n- Si el número de la carta se corresponde con la posición en la que se está echando esa carta, se suman tantos puntos como el valor de esa carta (ej: la segunda carta en sacarse es un 2, el equipo que barajó se lleva 2 puntos). \n- Las cartas sobrantes se devuelven al mazo original.\n\nUna vez las cartas están sobre la mesa y se han contado los primeros puntos, el que baraja reparte 3 cartas boca abajo a cada jugador.  \n\nSegunda fase del juego:\nCada jugador comprueba entre sus cartas si tiene alguna combinación que le pueda dar puntos:\n\n- Ronda (1 punto): Dos cartas con el mismo número (pareja).\n- Parranda (3 puntos): Tres cartas con el mismo número (trío).\n- Caracol (4 puntos): 3 números seguidos (escalera).\n- Caracolillo (4 puntos): Caracol pero todos del mismo palo (escalera de color).\n- Especiales (+1 punto): Si cualquiera de las combinaciones anteriores tiene un rey, decimos que es \"- de reyes\" (caracol de reyes) y suma 1 punto más.  \n\nSi alguien canta alguna combinación y tú también tienes alguna, debes decirlo, aunque no sea tu turno. Solo un equipo puede sumar puntos por las combinaciones en un turno (las combinaciones de ambos miembros sumadas): El equipo que tenga la combinación más valiosa. Si ambos equipos tienen una combinación igual de valiosa, los puntos irán para el equipo con la combinación mayor (Ronda de 5 es superior a Ronda de 3). En caso de que esto no aclare el equipo que suma puntos, se deberá mirar al palo más valioso, en este orden: ORO &gt; COPA &gt; ESPADA &gt; BASTO.  \n\nTercera fase del juego:\nEl objetivo de esta fase es recoger tantas cartas como sea posible para luego sumar puntos. El otro jugador del equipo que baraja debe empezar su turno. Debe emparejar sus cartas y las cartas sobre la mesa, pudiendo tirar solamente 1 carta por turno. Si no puedes hacer pareja, deja una de tus cartas sobre la mesa. Si el jugador siguiente a ti tiene una carta del mismo número de la que acabas de dejar sobre la mesa, emparejará su carta con la tuya y además de llevarse las cartas, sumará 1 punto directamente. Esto se llama MAJO. Si los jugadores siguientes también tienen esa carta pueden CONTRAMAJAR, lo que evita que el otro equipo se lleve el punto. El último majador/contramajador se llevará el punto. La pareja se apartará al montón de cartas del equipo, para después contarlas. Además de parejas se puede hacer escalera ascendente a partir de la carta emparejada. (EJEMPLO: Sobre la mesa hay 3, 4, 7, 12. El jugador tiene un 3. Hace pareja con el 3 sobre la mesa, y además se lleva el 4). Si el jugador podría haberse llevado una escalera pero no lo ha hecho (por despiste), cualquier otro jugador puede coger las cartas que no se llevó. Esto se llama SOPLO.  \nPasa al siguiente jugador y se siguen repartiendo las cartas de 3 en 3 hasta que se termine el mazo.  \n\nCuarta fase del juego:  \nCada equipo cuenta las cartas en su mazo. Cada carta sobre 20 le sumará un punto al equipo. \nSi no se llega a 10 buenas, la fase 1 vuelve a empezar. Esta vez baraja el jugador a la izquierda del jugador que barajó antes.  \n\n ¡A JUGAR!</string>
+    <string name="reglas_objetivo_titulo">El Objetivo</string>
+    <string name="reglas_objetivo_texto">Ir sumando puntos hasta alcanzar la puntuación objetivo (10 buenas). Empezarás a sumar buenas cuando hayas alcanzado 11 malas.</string>
+    <string name="about_texto">Juego tradicional. \n \nApp desarrollada por Xabier y Cristina.</string>
+    <string name="about_disclaimer">*No nos hacemos responsables de posibles amistades rotas</string>
+    <string name="menu_nueva_partida">Nueva Partida</string>
+
+    <!-- Avisos y diálogo de la pantalla principal. -->
+    <string name="equipo_gana">%1$s GANA</string>
+    <string name="nueva_partida_aviso">NUEVA PARTIDA</string>
+    <string name="nueva_partida_titulo">¿Seguro que quieres reiniciar?</string>
+    <string name="nueva_partida_si">Sí</string>
+    <string name="nueva_partida_no">No</string>
+    <string name="fin_partida_pregunta">¿Echamos otra?</string>
+    <string name="fin_partida_seguir">Seguir</string>
 </resources>
