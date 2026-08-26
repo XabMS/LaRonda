@@ -7,4 +7,6 @@
     <color name="blanco">#FFFFFF</color>
     <color name="rojo">#ff0000</color>
     <color name="verde">#00b300</color>
+    <color name="malas">#d32f2f</color>
+    <color name="buenas">#4caf50</color>
 </resources>

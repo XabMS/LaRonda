@@ -2,246 +2,195 @@ package com.lostandfondue.ronda
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.lostandfondue.ronda.databinding.ActivityMainBinding
 
+// --- Reglas de puntuación de "La Ronda" ---
+// El marcador de cada equipo pasa por dos fases: "Malas" (0-11) y "Buenas" (0-9).
+// Al superar las Malas se pasa a Buenas arrastrando el sobrante; al superar las
+// Buenas, el equipo gana la partida.
 
+// Puntuación a partir de la cual un equipo pasa de "Malas" a "Buenas".
+private const val MALAS_PARA_BUENAS = 11
+
+// Puntuación de "Buenas" a partir de la cual el equipo gana la partida.
+private const val BUENAS_PARA_GANAR = 9
+
+// Puntuación en la que se deja fijado el marcador al ganar (no sigue subiendo).
+private const val PUNTUACION_GANADORA = 10
+
+// Puntos que otorga cada combinación del juego (ver botones de cada equipo).
+private const val PUNTOS_RONDA = 1
+private const val PUNTOS_PARRANDA = 3
+private const val PUNTOS_CARACOL = 4
+private const val PUNTOS_MAJO = 1
+private const val PUNTOS_BIEN_DA = 1
+
+/**
+ * Marcador de un equipo: guarda su puntuación y fase (Malas/Buenas), y se
+ * encarga de reflejar ese estado en sus propias vistas (el número y el
+ * texto "Malas"/"Buenas" bajo él).
+ *
+ * Se instancia una vez por equipo (ver [MainActivity.equipo1] y
+ * [MainActivity.equipo2]) en vez de duplicar la lógica de puntuación dos
+ * veces, una por equipo, como estaba antes.
+ *
+ * @param nombreEquipo nombre usado en el Toast al ganar (p.ej. "EQUIPO 1").
+ * @param contadorView TextView grande donde se pinta el número de puntos.
+ * @param textoView TextView donde se pinta "Malas" o "Buenas".
+ * @param onGana se invoca cuando este equipo alcanza la puntuación ganadora.
+ */
+private class Marcador(
+    private val nombreEquipo: String,
+    private val contadorView: TextView,
+    private val textoView: TextView,
+    private val onGana: (String) -> Unit,
+) {
+    private var puntuacion = 0
+    private var esBuenas = false
+
+    init {
+        // Pinta el estado inicial (0, Malas) en las vistas al crear el marcador.
+        actualizarVistas()
+    }
+
+    /** Suma [puntos] al marcador y comprueba si toca cambiar de fase o ganar. */
+    fun sumar(puntos: Int) {
+        puntuacion += puntos
+        if (!esBuenas) {
+            // Fase Malas: si nos pasamos de MALAS_PARA_BUENAS, pasamos a Buenas
+            // arrastrando el sobrante (p.ej. 12 Malas -> 1 Buena).
+            if (puntuacion > MALAS_PARA_BUENAS) {
+                esBuenas = true
+                puntuacion -= MALAS_PARA_BUENAS
+            }
+        } else if (puntuacion > BUENAS_PARA_GANAR) {
+            // Fase Buenas: al superar BUENAS_PARA_GANAR, el equipo gana y el
+            // marcador se queda fijo en PUNTUACION_GANADORA.
+            puntuacion = PUNTUACION_GANADORA
+            onGana(nombreEquipo)
+        }
+        actualizarVistas()
+    }
+
+    /** Resta 1 punto (botón "-1"), deshaciendo el cambio de fase si hace falta. */
+    fun restar() {
+        puntuacion -= 1
+        if (puntuacion < 1 && esBuenas) {
+            // Bajamos de 1 en Buenas -> volvemos a Malas, dejando el marcador
+            // en el máximo de esa fase (el "paso atrás" del cambio de fase).
+            esBuenas = false
+            puntuacion = MALAS_PARA_BUENAS
+        } else if (puntuacion < 1) {
+            // Bajamos de 1 en Malas -> no hay fase anterior, se queda en 0.
+            puntuacion = 0
+        }
+        actualizarVistas()
+    }
+
+    /** Vuelve a dejar el marcador a 0 Malas (usado en "Nueva partida"). */
+    fun reset() {
+        puntuacion = 0
+        esBuenas = false
+        actualizarVistas()
+    }
+
+    /** Refleja puntuacion/esBuenas en las vistas: número, texto y color. */
+    private fun actualizarVistas() {
+        contadorView.text = puntuacion.toString()
+        textoView.text = if (esBuenas) "Buenas" else "Malas"
+        val color = if (esBuenas) R.color.buenas else R.color.malas
+        contadorView.setTextColor(ContextCompat.getColor(contadorView.context, color))
+    }
+}
+
+/**
+ * Pantalla principal: marcador de los dos equipos y botones de puntuación.
+ * Cada equipo tiene su propio [Marcador] ([equipo1], [equipo2]) que gestiona
+ * toda la lógica de puntuación de ese equipo.
+ */
 class MainActivity : AppCompatActivity() {
 
-    var contador1 = 0
-    var contador2 = 0
-    var cont1Str = ""
-    var cont2Str = ""
-    var texto1 = "Malas"
-    var texto2 = "Malas"
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var equipo1: Marcador
+    private lateinit var equipo2: Marcador
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
+        // Necesario desde targetSdk 36: sin esto el contenido se dibuja
+        // detrás de la barra de estado / la ActionBar (ver InsetsExt.kt).
+        binding.root.applySystemBarInsetsAsPadding()
 
-
-        val BotonRonda1 = findViewById<Button>(R.id.BotonRonda1) //crear uno para cada boton
-        val BotonParranda1 = findViewById<Button>(R.id.BotonParranda1)
-        val BotonCaracol1 = findViewById<Button>(R.id.BotonCaracol1)
-        val BotonMajo1 = findViewById<Button>(R.id.BotonMajo1)
-        val BotonBienda1 = findViewById<Button>(R.id.BotonBienda1)
-        val BotonResta1 = findViewById<Button>(R.id.BotonResta1)
-        val BotonSuma1 = findViewById<Button>(R.id.BotonSuma1)
-
-        val BotonRonda2 = findViewById<Button>(R.id.BotonRonda2) //crear uno para cada boton
-        val BotonParranda2 = findViewById<Button>(R.id.BotonParranda2)
-        val BotonCaracol2 = findViewById<Button>(R.id.BotonCaracol2)
-        val BotonMajo2 = findViewById<Button>(R.id.BotonMajo2)
-        val BotonBienda2 = findViewById<Button>(R.id.BotonBienda2)
-        val BotonResta2 = findViewById<Button>(R.id.BotonResta2)
-        val BotonSuma2 = findViewById<Button>(R.id.BotonSuma2)
-
-        //funcion que comprueba si vale mas de 11, cambia el texto de buenas/malas y reajusta el contador si hace falta
-        fun comparador(contador: Int, texto: String, equipo: Int): Int {
-            if (equipo == 1){
-                contador1 = contador
-                texto1 = texto
-                if (texto1 == "Malas") {
-                    if (contador > 11) {
-                        texto1 = "Buenas"
-                        binding.Texto1.text = texto1
-                        binding.Contador1.setTextColor(Color.parseColor("#4caf50"))
-                        contador1 -= 11
-                    } else {
-                        return contador1
-                    }
-
-                } else {
-                    if (contador > 9) {
-                        contador1 = 10
-                        Toast.makeText(this@MainActivity, "EQUIPO 1 GANA", Toast.LENGTH_SHORT).show()
-                    } else {
-                        return contador1
-                    }
-                }
-                return contador1
-            }
-            else {
-                contador2 = contador
-                texto2 = texto
-                if (texto2 == "Malas") {
-                    if (contador > 11) {
-                        texto2 = "Buenas"
-                        binding.Texto2.text = texto2
-                        binding.Contador2.setTextColor(Color.parseColor("#4caf50"))
-                        contador2 -= 11
-                    } else {
-                        return contador2
-                    }
-
-                } else {
-                    if (contador > 9) {
-                        contador2 = 10
-                        Toast.makeText(this@MainActivity, "EQUIPO 2 GANA", Toast.LENGTH_SHORT).show()
-                    } else {
-                        return contador2
-                    }
-                }
-                return contador2
-            }
+        // Mismo Toast de victoria para los dos equipos, parametrizado por nombre.
+        val onGana: (String) -> Unit = { nombreEquipo ->
+            Toast.makeText(this, "$nombreEquipo GANA", Toast.LENGTH_SHORT).show()
         }
+        equipo1 = Marcador("EQUIPO 1", binding.Contador1, binding.Texto1, onGana)
+        equipo2 = Marcador("EQUIPO 2", binding.Contador2, binding.Texto2, onGana)
 
-        //funcion para sumar x al equipo y
-        fun suma_puntuacion(cantidad: Int, equipo: Int){
-            if (equipo == 1) {
-                contador1 += cantidad
-                comparador(contador1, texto1,1)
-                cont1Str = contador1.toString()
-                binding.Contador1.text = cont1Str
-            } else {
-                contador2 += cantidad
-                comparador(contador2, texto2,2)
-                cont2Str = contador2.toString()
-                binding.Contador2.text = cont2Str
-            }
-        }
+        // Botones del equipo 1: cada uno suma los puntos de su combinación,
+        // salvo "-1" que resta y "+1" que ajusta manualmente el marcador.
+        binding.BotonRonda1.setOnClickListener { equipo1.sumar(PUNTOS_RONDA) }
+        binding.BotonParranda1.setOnClickListener { equipo1.sumar(PUNTOS_PARRANDA) }
+        binding.BotonCaracol1.setOnClickListener { equipo1.sumar(PUNTOS_CARACOL) }
+        binding.BotonMajo1.setOnClickListener { equipo1.sumar(PUNTOS_MAJO) }
+        binding.BotonBienda1.setOnClickListener { equipo1.sumar(PUNTOS_BIEN_DA) }
+        binding.BotonResta1.setOnClickListener { equipo1.restar() }
+        binding.BotonSuma1.setOnClickListener { equipo1.sumar(1) }
 
-        //funcion para restar 1 al equipo y
-        fun resta_puntuacion(equipo: Int){
-            if (equipo == 1) {
-                contador1 -= 1
-                if (contador1 < 1 && texto1 == "Buenas") {        //pasamos de buenas a malas
-                    texto1 = "Malas"
-                    binding.Texto1.text = texto1
-                    binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
-                    contador1 = 11
-                }
-                if (contador1 < 1 && texto1 == "Malas") {
-                    contador1 = 0
-                }
-                cont1Str = contador1.toString()
-                binding.Contador1.text = cont1Str
-            } else {
-                contador2 -= 1
-                if (contador2 < 1 && texto2 == "Buenas") {        //pasamos de buenas a malas
-                    texto2 = "Malas"
-                    binding.Texto2.text = texto2
-                    binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
-                    contador2 = 11
-                }
-                if (contador2 < 1 && texto2 == "Malas") {
-                    contador2 = 0
-                }
-                comparador(contador2,texto2,2)
-                cont2Str = contador2.toString()
-                binding.Contador2.text = cont2Str
-            }
-        }
-
-        BotonRonda1.setOnClickListener {
-            suma_puntuacion(1, 1)}
-        BotonParranda1.setOnClickListener {
-            suma_puntuacion(3, 1)}
-        BotonCaracol1.setOnClickListener {
-            suma_puntuacion(4, 1)}
-        BotonMajo1.setOnClickListener {
-            suma_puntuacion(1, 1)}
-        BotonBienda1.setOnClickListener {
-            suma_puntuacion(1, 1)}
-        BotonResta1.setOnClickListener {
-            resta_puntuacion(1)}
-        BotonSuma1.setOnClickListener {
-            suma_puntuacion(1, 1)}
-
-        // EQUIPO 2
-
-        BotonRonda2.setOnClickListener {
-            suma_puntuacion(1, 2)}
-        BotonParranda2.setOnClickListener {
-            suma_puntuacion(3, 2)}
-        BotonCaracol2.setOnClickListener {
-            suma_puntuacion(4, 2)}
-        BotonMajo2.setOnClickListener {
-            suma_puntuacion(1, 2)}
-        BotonBienda2.setOnClickListener {
-            suma_puntuacion(1, 2)}
-        BotonResta2.setOnClickListener {
-            resta_puntuacion(2)}
-        BotonSuma2.setOnClickListener {
-            suma_puntuacion(1, 2)}
+        // Mismos botones para el equipo 2.
+        binding.BotonRonda2.setOnClickListener { equipo2.sumar(PUNTOS_RONDA) }
+        binding.BotonParranda2.setOnClickListener { equipo2.sumar(PUNTOS_PARRANDA) }
+        binding.BotonCaracol2.setOnClickListener { equipo2.sumar(PUNTOS_CARACOL) }
+        binding.BotonMajo2.setOnClickListener { equipo2.sumar(PUNTOS_MAJO) }
+        binding.BotonBienda2.setOnClickListener { equipo2.sumar(PUNTOS_BIEN_DA) }
+        binding.BotonResta2.setOnClickListener { equipo2.restar() }
+        binding.BotonSuma2.setOnClickListener { equipo2.sumar(1) }
     }
 
-    fun reset(): Boolean {
-        contador1 = 0
-        contador2 = 0
-        cont1Str = contador1.toString()
-        binding.Contador1.text = cont1Str
-        cont2Str = contador2.toString()
-        binding.Contador2.text = cont2Str
-        texto1 = "Malas"
-        texto2 = "Malas"
-        binding.Texto1.text = texto1
-        binding.Contador1.setTextColor(Color.parseColor("#d32f2f"))
-        binding.Texto2.text = texto2
-        binding.Contador2.setTextColor(Color.parseColor("#d32f2f"))
-        Toast.makeText(this@MainActivity, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.menuAcercaDe -> {
-                val intent = Intent(this, Aboutpage::class.java).apply {                }
-                startActivity(intent)
-                true
-            }
-            R.id.menuReglas -> {
-                val intent = Intent(this, Reglas::class.java).apply {                }
-                startActivity(intent)
-                true
-            }
-            R.id.menuNuevaPartida -> Alert()
-
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    fun Alert(): Boolean {
-        // build alert dialog
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        // set message of alert dialog
-        //dialogBuilder.setMessage("¿Seguro que quieres reiniciar?")
-            // if the dialog is cancelable
-            .setCancelable(false)
-            // positive button text and action
-            .setPositiveButton("Sí") { dialog, id ->
-                reset()
-            }
-            // negative button text and action
-            .setNegativeButton("No") { dialog, id ->
-                dialog.cancel()
-            }
-
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // set title for alert dialog box
-        alert.setTitle("¿Seguro que quieres reiniciar?")
-        // show alert dialog
-        alert.show()
-
-        return true
-    }
-
+    // Infla el menú de la ActionBar (Acerca de / Reglas / Nueva partida).
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.topbar, menu)
         return true
+    }
+
+    // Gestiona los taps en las opciones del menú de la ActionBar.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menuAcercaDe -> {
+            startActivity(Intent(this, Aboutpage::class.java))
+            true
+        }
+        R.id.menuReglas -> {
+            startActivity(Intent(this, Reglas::class.java))
+            true
+        }
+        R.id.menuNuevaPartida -> confirmarNuevaPartida()
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    /** Pide confirmación antes de reiniciar la partida (botón "Nueva partida"). */
+    private fun confirmarNuevaPartida(): Boolean {
+        AlertDialog.Builder(this)
+            .setTitle("¿Seguro que quieres reiniciar?")
+            .setCancelable(false)
+            .setPositiveButton("Sí") { _, _ -> nuevaPartida() }
+            .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+            .show()
+        return true
+    }
+
+    /** Pone ambos marcadores a 0 y avisa con un Toast. */
+    private fun nuevaPartida() {
+        equipo1.reset()
+        equipo2.reset()
+        Toast.makeText(this, "NUEVA PARTIDA", Toast.LENGTH_SHORT).show()
     }
 }
