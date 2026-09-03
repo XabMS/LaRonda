@@ -29,13 +29,16 @@ private const val PUNTOS_BIEN_DA = 1
  * [MainActivity.equipo2]) en vez de duplicar la lógica de puntuación dos
  * veces, una por equipo, como estaba antes.
  *
- * @param nombreEquipo nombre usado al avisar de la victoria (p.ej. "Equipo 1").
+ * `internal` (y no `private`) sólo para poder cubrirlo con tests de Robolectric.
+ *
+ * @param nombreEquipo nombre usado al avisar de la victoria (p.ej. "Equipo 1");
+ *   puede cambiar en caliente desde la pantalla "Cambiar nombres".
  * @param contadorView TextView grande donde se pinta el número de puntos.
  * @param textoView TextView donde se pinta "Malas" o "Buenas".
  * @param onGana se invoca la única jugada en que este equipo gana la partida.
  */
-private class Marcador(
-    private val nombreEquipo: String,
+internal class Marcador(
+    var nombreEquipo: String,
     private val contadorView: TextView,
     private val textoView: TextView,
     private val cardView: MaterialCardView,
@@ -155,6 +158,18 @@ class MainActivity : AppCompatActivity() {
         binding.BotonSuma2.setOnClickListener { equipo2.sumar(1) }
     }
 
+    // Los nombres de los equipos son un ajuste persistente (ver Ajustes.kt): se
+    // releen cada vez que la pantalla vuelve al frente para recoger un cambio
+    // hecho en "Cambiar nombres" sin recrear la Activity ni tocar el marcador.
+    override fun onResume() {
+        super.onResume()
+        val (nombre1, nombre2) = leerNombresEquipos()
+        binding.Equipo1.text = nombre1
+        binding.Equipo2.text = nombre2
+        equipo1.nombreEquipo = nombre1
+        equipo2.nombreEquipo = nombre2
+    }
+
     // Guarda el marcador de los dos equipos: sin esto, girar la pantalla o
     // cambiar a modo oscuro recrea la Activity y la partida vuelve a 0-0.
     override fun onSaveInstanceState(outState: Bundle) {
@@ -185,6 +200,10 @@ class MainActivity : AppCompatActivity() {
         }
         R.id.menuReglas -> {
             startActivity(Intent(this, Reglas::class.java))
+            true
+        }
+        R.id.menuCambiarNombres -> {
+            startActivity(Intent(this, CambiarNombres::class.java))
             true
         }
         R.id.menuNuevaPartida -> confirmarNuevaPartida()

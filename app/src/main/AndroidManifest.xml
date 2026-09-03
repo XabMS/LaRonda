@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CambiarNombres"
+            android:exported="false"
+            android:label="@string/cambiar_nombres_title"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".Reglas"
             android:exported="false"
             android:label="@string/reglas_title" />
