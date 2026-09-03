@@ -39,9 +39,12 @@
 
                 <TextView
                     android:id="@+id/Equipo1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
                     android:text="@string/Equipo_1"
                     android:textColor="@color/textoSobreGradiente"
                     android:textSize="36sp"
@@ -178,9 +181,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/Equipo2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
                     android:text="@string/Equipo_2"
                     android:textColor="@color/textoSobreGradiente"
                     android:textSize="36sp"

@@ -24,6 +24,15 @@
     <string name="about_texto">Juego tradicional. \n \nApp desarrollada por Xabier y Cristina.</string>
     <string name="about_disclaimer">*No nos hacemos responsables de posibles amistades rotas</string>
     <string name="menu_nueva_partida">Nueva Partida</string>
+    <string name="menu_cambiar_nombres">Cambiar nombres</string>
+
+    <!-- Pantalla "Cambiar nombres" (nombres personalizados de los equipos). -->
+    <string name="cambiar_nombres_title">Cambiar nombres</string>
+    <string name="cambiar_nombres_equipo1_hint">Nombre del equipo 1</string>
+    <string name="cambiar_nombres_equipo2_hint">Nombre del equipo 2</string>
+    <string name="cambiar_nombres_aceptar">Aceptar nombres</string>
+    <string name="cambiar_nombres_restablecer">Restablecer nombres</string>
+    <string name="cambiar_nombres_aviso">NOMBRES ACTUALIZADOS</string>
 
     <!-- Avisos y diálogo de la pantalla principal. -->
     <string name="equipo_gana">%1$s GANA</string>

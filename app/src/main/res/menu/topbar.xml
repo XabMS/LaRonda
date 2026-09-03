@@ -8,6 +8,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menuCambiarNombres"
+        android:orderInCategory="150"
+        android:title="@string/menu_cambiar_nombres"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menuAcercaDe"
         android:checkable="false"
         android:enabled="true"
