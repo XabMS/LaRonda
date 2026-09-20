@@ -3,11 +3,11 @@ package com.lostandfondue.ronda
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 /**
  * Round-trip de los ajustes persistentes (SharedPreferences) de [Ajustes.kt]:
@@ -15,7 +15,6 @@ import org.robolectric.annotation.Config
  * cuando faltan. Necesita Robolectric por el [Context].
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [34])
 class AjustesPrefsTest {
 
     private lateinit var context: Context
@@ -23,7 +22,7 @@ class AjustesPrefsTest {
     @Before
     fun limpiarPrefs() {
         context = ApplicationProvider.getApplicationContext()
-        context.getSharedPreferences("ajustes", Context.MODE_PRIVATE).edit().clear().commit()
+        context.prefsAjustes().edit().clear().commit()
     }
 
     @Test
@@ -33,20 +32,43 @@ class AjustesPrefsTest {
 
     @Test
     fun `guardar y releer devuelve los nombres personalizados`() {
-        context.guardarNombresEquipos("Los Tigres", "Las Panteras")
-        assertEquals("Los Tigres" to "Las Panteras", context.leerNombresEquipos())
+        context.guardarNombresEquipos("Tigres", "Panteras")
+        assertEquals("Tigres" to "Panteras", context.leerNombresEquipos())
     }
 
     @Test
     fun `un nombre en blanco cae al valor por defecto solo en ese equipo`() {
-        context.guardarNombresEquipos("Los Tigres", "   ")
-        assertEquals("Los Tigres" to "Equipo 2", context.leerNombresEquipos())
+        context.guardarNombresEquipos("Tigres", "   ")
+        assertEquals("Tigres" to "Equipo 2", context.leerNombresEquipos())
     }
 
     @Test
     fun `los nombres se guardan recortados`() {
-        context.guardarNombresEquipos("  Los Tigres  ", "Las Panteras")
-        assertEquals("Los Tigres" to "Las Panteras", context.leerNombresEquipos())
+        context.guardarNombresEquipos("  Tigres  ", "Panteras")
+        assertEquals("Tigres" to "Panteras", context.leerNombresEquipos())
+    }
+
+    @Test
+    fun `guardar el nombre por defecto borra la preferencia`() {
+        context.guardarNombresEquipos("Tigres", "Panteras")
+        context.guardarNombresEquipos("Equipo 1", "Equipo 2")
+
+        // Ni el literal "Equipo 1" ni el "Equipo 2" llegan a disco: el equipo
+        // queda "sin nombre puesto" y el valor por defecto se resuelve al leer.
+        val prefs = context.prefsAjustes()
+        assertFalse(prefs.contains(CLAVE_NOMBRE_EQUIPO_1))
+        assertFalse(prefs.contains(CLAVE_NOMBRE_EQUIPO_2))
+        assertEquals("Equipo 1" to "Equipo 2", context.leerNombresEquipos())
+    }
+
+    @Test
+    fun `un nombre en blanco borra la preferencia anterior`() {
+        context.guardarNombresEquipos("Tigres", "Panteras")
+        context.guardarNombresEquipos("   ", "Panteras")
+
+        val prefs = context.prefsAjustes()
+        assertFalse(prefs.contains(CLAVE_NOMBRE_EQUIPO_1))
+        assertEquals("Equipo 1" to "Panteras", context.leerNombresEquipos())
     }
 
     @Test

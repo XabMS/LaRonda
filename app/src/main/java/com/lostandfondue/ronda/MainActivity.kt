@@ -31,18 +31,20 @@ private const val PUNTOS_BIEN_DA = 1
  *
  * `internal` (y no `private`) sólo para poder cubrirlo con tests de Robolectric.
  *
- * @param nombreEquipo nombre usado al avisar de la victoria (p.ej. "Equipo 1");
- *   puede cambiar en caliente desde la pantalla "Cambiar nombres".
+ * No guarda el nombre del equipo: es un ajuste que se puede cambiar en caliente
+ * desde "Cambiar nombres", y tener aquí una copia obligaba a resincronizarla a
+ * mano en cada onResume. Quien monta el marcador decide de qué equipo es (ver
+ * [onGana]) y el nombre se resuelve en el momento de anunciar la victoria.
+ *
  * @param contadorView TextView grande donde se pinta el número de puntos.
  * @param textoView TextView donde se pinta "Malas" o "Buenas".
  * @param onGana se invoca la única jugada en que este equipo gana la partida.
  */
 internal class Marcador(
-    var nombreEquipo: String,
     private val contadorView: TextView,
     private val textoView: TextView,
     private val cardView: MaterialCardView,
-    private val onGana: (String) -> Unit,
+    private val onGana: () -> Unit,
 ) {
     private val puntuacion = Puntuacion()
 
@@ -58,7 +60,7 @@ internal class Marcador(
     fun sumar(puntos: Int) {
         val gana = puntuacion.sumar(puntos)
         actualizarVistas()
-        if (gana) onGana(nombreEquipo)
+        if (gana) onGana()
     }
 
     /** Resta 1 punto (botón "-1"). */
@@ -124,16 +126,15 @@ class MainActivity : AppCompatActivity() {
         // ya no usamos la ActionBar clásica del sistema.
         setSupportActionBar(binding.toolbar)
 
-        // Mismo aviso de victoria para los dos equipos, parametrizado por nombre.
-        val onGana: (String) -> Unit = ::mostrarFinPartida
-        equipo1 = Marcador(
-            getString(R.string.Equipo_1), binding.Contador1, binding.Texto1,
-            binding.CardMarcador1, onGana,
-        )
-        equipo2 = Marcador(
-            getString(R.string.Equipo_2), binding.Contador2, binding.Texto2,
-            binding.CardMarcador2, onGana,
-        )
+        // Mismo aviso de victoria para los dos equipos; el nombre se lee de los
+        // ajustes en el momento de ganar, así siempre es el que está puesto
+        // ahora mismo (ver [Ajustes.kt]) sin guardarlo en el propio Marcador.
+        equipo1 = Marcador(binding.Contador1, binding.Texto1, binding.CardMarcador1) {
+            mostrarFinPartida(leerNombresEquipos().first)
+        }
+        equipo2 = Marcador(binding.Contador2, binding.Texto2, binding.CardMarcador2) {
+            mostrarFinPartida(leerNombresEquipos().second)
+        }
         // Recupera la partida si la Activity se está recreando (giro de
         // pantalla, cambio de modo claro/oscuro, vuelta tras matar el proceso).
         savedInstanceState?.let(::restaurarPartida)
@@ -166,8 +167,6 @@ class MainActivity : AppCompatActivity() {
         val (nombre1, nombre2) = leerNombresEquipos()
         binding.Equipo1.text = nombre1
         binding.Equipo2.text = nombre2
-        equipo1.nombreEquipo = nombre1
-        equipo2.nombreEquipo = nombre2
     }
 
     // Guarda el marcador de los dos equipos: sin esto, girar la pantalla o

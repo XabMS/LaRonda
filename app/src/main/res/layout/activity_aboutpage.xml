@@ -7,12 +7,14 @@
     android:orientation="vertical"
     tools:context=".Aboutpage">
 
+    <!-- El título lo pone setSupportActionBar desde android:label
+         (AndroidManifest.xml); poner app:title aquí no se vería. -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:title="@string/AboutPage"
+        app:navigationIconTint="?attr/colorOnPrimary"
         app:titleTextColor="?attr/colorOnPrimary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

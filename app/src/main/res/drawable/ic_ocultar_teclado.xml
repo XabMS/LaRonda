@@ -1,0 +1,14 @@
+<!-- Flecha hacia abajo que sustituye a la flecha "atrás" del Toolbar mientras
+     el teclado está abierto (ver CambiarNombres): igual que el indicador que
+     el sistema pone en la barra de navegación, pulsarla sólo baja el teclado.
+     Sin fillColor de marca a propósito: lo tiñe el navigationIconTint del
+     MaterialToolbar, como a la flecha "atrás" por defecto. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M7.41,8.59L12,13.17l4.58,-4.58L18,10l-6,6 -6,-6z" />
+</vector>

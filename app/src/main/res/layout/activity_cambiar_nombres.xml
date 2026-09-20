@@ -7,12 +7,14 @@
     android:orientation="vertical"
     tools:context=".CambiarNombres">
 
+    <!-- El título lo pone setSupportActionBar desde android:label
+         (AndroidManifest.xml); poner app:title aquí no se vería. -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:title="@string/cambiar_nombres_title"
+        app:navigationIconTint="?attr/colorOnPrimary"
         app:titleTextColor="?attr/colorOnPrimary" />
 
     <ScrollView
@@ -33,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cambiar_nombres_equipo1_hint"
                 app:counterEnabled="true"
-                app:counterMaxLength="15">
+                app:counterMaxLength="9">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/EntradaEquipo1"
@@ -41,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
-                    android:maxLength="15"
+                    android:maxLength="9"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -54,7 +56,7 @@
                 android:layout_marginTop="16dp"
                 android:hint="@string/cambiar_nombres_equipo2_hint"
                 app:counterEnabled="true"
-                app:counterMaxLength="15">
+                app:counterMaxLength="9">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/EntradaEquipo2"
@@ -62,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
-                    android:maxLength="15"
+                    android:maxLength="9"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,8 +73,12 @@
 
     </ScrollView>
 
-    <!-- Fuera del ScrollView: queda fijo abajo, sobre el teclado
-         (windowSoftInputMode="adjustResize" en el manifiesto). -->
+    <!-- Fuera del ScrollView: queda fijo abajo, sobre el teclado. Quien lo
+         mantiene visible es el inset del teclado que aplica CambiarNombres
+         (applySystemBarInsetsAsPadding(includeIme = true)): con edge-to-edge
+         obligatorio, windowSoftInputMode="adjustResize" ya no redimensiona la
+         ventana. Al crecer el padding inferior, el ScrollView (weight=1) es el
+         que encoge y estos botones siguen a la vista. -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

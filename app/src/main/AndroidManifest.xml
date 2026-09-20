@@ -12,7 +12,7 @@
         <activity
             android:name=".CambiarNombres"
             android:exported="false"
-            android:label="@string/cambiar_nombres_title"
+            android:label="@string/menu_cambiar_nombres"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Reglas"

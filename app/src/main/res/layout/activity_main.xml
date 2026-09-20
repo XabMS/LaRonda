@@ -45,7 +45,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="@string/Equipo_1"
+                    tools:text="@string/Equipo_1"
                     android:textColor="@color/textoSobreGradiente"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -188,7 +188,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="@string/Equipo_2"
+                    tools:text="@string/Equipo_2"
                     android:textColor="@color/textoSobreGradiente"
                     android:textSize="36sp"
                     android:textStyle="bold" />

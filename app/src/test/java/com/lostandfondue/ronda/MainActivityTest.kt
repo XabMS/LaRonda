@@ -15,7 +15,6 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
-import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 
 /**
@@ -23,7 +22,6 @@ import org.robolectric.shadows.ShadowDialog
  * navegación del menú y relectura de los nombres de equipo en onResume.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [34])
 class MainActivityTest {
 
     private lateinit var controller: ActivityController<MainActivity>
@@ -32,7 +30,7 @@ class MainActivityTest {
     @Before
     fun setUp() {
         ApplicationProvider.getApplicationContext<Context>()
-            .getSharedPreferences("ajustes", Context.MODE_PRIVATE).edit().clear().commit()
+            .prefsAjustes().edit().clear().commit()
         controller = Robolectric.buildActivity(MainActivity::class.java).setup()
     }
 
@@ -94,9 +92,23 @@ class MainActivityTest {
 
     @Test
     fun `onResume recoge los nombres guardados en preferencias`() {
-        activity.guardarNombresEquipos("Los Tigres", "Las Panteras")
+        activity.guardarNombresEquipos("Tigres", "Panteras")
         controller.pause().resume()
-        assertEquals("Los Tigres", texto(R.id.Equipo1))
-        assertEquals("Las Panteras", texto(R.id.Equipo2))
+        assertEquals("Tigres", texto(R.id.Equipo1))
+        assertEquals("Panteras", texto(R.id.Equipo2))
+    }
+
+    @Test
+    fun `el dialogo de victoria usa el nombre que esta puesto`() {
+        // Cambiar el nombre a mitad de partida, como al volver de "Cambiar
+        // nombres": el aviso de victoria tiene que anunciar el nombre nuevo,
+        // no el que hubiera al crear la Activity.
+        activity.guardarNombresEquipos("Tigres", "Panteras")
+        controller.pause().resume()
+        repeat(21) { pulsar(R.id.BotonSuma1) } // 11 malas + 9 buenas + 1 = victoria
+
+        val dialogo = ShadowDialog.getLatestDialog() as AlertDialog
+        val titulo = dialogo.findViewById<TextView>(androidx.appcompat.R.id.alertTitle)
+        assertEquals("Tigres GANA", titulo?.text.toString())
     }
 }

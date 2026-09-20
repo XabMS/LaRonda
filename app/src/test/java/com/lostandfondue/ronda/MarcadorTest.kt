@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 /**
  * [Marcador] (clase de [MainActivity]): comprueba que el estado de [Puntuacion]
@@ -20,7 +19,6 @@ import org.robolectric.annotation.Config
  * victoria salta una única vez. Necesita Robolectric por las Views.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [34])
 class MarcadorTest {
 
     private lateinit var contador: TextView
@@ -37,7 +35,7 @@ class MarcadorTest {
         texto = TextView(context)
         val card = MaterialCardView(context)
         ganadores.clear()
-        marcador = Marcador("Equipo 1", contador, texto, card) { ganadores.add(it) }
+        marcador = Marcador(contador, texto, card) { ganadores.add("Equipo 1") }
     }
 
     @Test
@@ -102,12 +100,7 @@ class MarcadorTest {
         assertEquals("Buenas", texto.text.toString())
     }
 
-    @Test
-    fun `el nombre del equipo se puede cambiar y se usa al ganar`() {
-        marcador.nombreEquipo = "Los Tigres"
-        marcador.sumar(11)
-        marcador.sumar(9)
-        marcador.sumar(1)
-        assertEquals(listOf("Los Tigres"), ganadores)
-    }
+    // El nombre del equipo ya no vive aquí: quien lo resuelve al ganar es
+    // MainActivity, leyéndolo de los ajustes (ver el test
+    // `el dialogo de victoria usa el nombre que esta puesto` en MainActivityTest).
 }
